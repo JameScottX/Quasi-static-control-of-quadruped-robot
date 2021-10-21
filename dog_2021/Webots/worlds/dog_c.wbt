@@ -1,0 +1,745 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 2
+  lineScale 0.3
+}
+Viewpoint {
+  orientation -0.9629780254745361 -0.2683664819233992 -0.025549047599108927 0.2739650153146952
+  position -0.040340003653009604 1.8431654394129582 6.087145015260823
+  follow "dog_c"
+  followType "None"
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+RectangleArena {
+  floorSize 10 10
+  floorTileSize 1 1
+  wallHeight 0.001
+}
+DEF dog_c Robot {
+  translation -0.97 0.659 0.76
+  children [
+    GPS {
+    }
+    InertialUnit {
+      name "imu"
+    }
+    Gyro {
+    }
+    Accelerometer {
+      name "acce"
+    }
+    DEF body_trs Transform {
+      translation 0 0.04 0
+      children [
+        DEF body_s Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            metalness 0.5
+          }
+          geometry Box {
+            size 0.76 0.18 0.23
+          }
+        }
+      ]
+    }
+    DEF rf_h_12 Hinge2Joint {
+      jointParameters HingeJointParameters {
+        anchor 0.26 0 0.13
+      }
+      jointParameters2 JointParameters {
+      }
+      device [
+        DEF rf_h_1_m RotationalMotor {
+          name "rf_h_1_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF rf_h_1_ps PositionSensor {
+          name "rf_h_1_ps"
+        }
+      ]
+      device2 [
+        DEF rf_h_2_m RotationalMotor {
+          name "rf_h_2_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF rf_h_2_ps PositionSensor {
+          name "rf_h_2_ps"
+        }
+      ]
+      endPoint Solid {
+        translation 0.26 0 0.13
+        rotation 0 0 -1 1.5707999999999995
+        children [
+          DEF rf_h_12_s Shape {
+            appearance DEF hip PBRAppearance {
+              baseColor 0.337255 0.00392157 1
+              baseColorMap ImageTexture {
+                url [
+                  "textures/plastic.jpg"
+                ]
+              }
+              metalness 0
+            }
+            geometry DEF hip Cylinder {
+              height 0.1
+              radius 0.06
+            }
+          }
+          DEF rf_h_12_leg_solid Solid {
+            translation 0.16 0 0
+            children [
+              DEF rf_h_12_leg_s Shape {
+                appearance DEF thign PBRAppearance {
+                  baseColor 0.333333 0.333333 1
+                  baseColorMap ImageTexture {
+                    url [
+                      "textures/plastic.jpg"
+                    ]
+                  }
+                  metalness 0
+                }
+                geometry DEF thign Box {
+                  size 0.32 0.07 0.048
+                }
+              }
+            ]
+            boundingObject USE rf_h_12_leg_s
+            physics Physics {
+              mass 0.5
+            }
+          }
+          DEF rf_h_3 HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.32 0 0
+            }
+            device [
+              DEF rf_h_3_m RotationalMotor {
+                name "rf_h_3_m"
+                acceleration 20
+                controlPID 20 0 2
+                maxVelocity 20
+                maxTorque 50
+              }
+              DEF rf_h_3_ps PositionSensor {
+                name "rf_h_3_ps"
+              }
+            ]
+            endPoint DEF rf_h_3_leg_solid Solid {
+              translation 0.4800000000000001 1.3877787807814457e-17 0
+              rotation 0 0 1 0
+              children [
+                DEF rf_h_3_s Shape {
+                  appearance DEF calf PBRAppearance {
+                    baseColor 0.333333 0.666667 1
+                    baseColorMap ImageTexture {
+                      url [
+                        "textures/plastic.jpg"
+                      ]
+                    }
+                    metalness 0
+                  }
+                  geometry DEF calf Box {
+                    size 0.32 0.032 0.034
+                  }
+                }
+                DEF rf_touch TouchSensor {
+                  translation 0.145 0 0
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF rf_foot_ts Transform {
+                      rotation 1 0 0 1.5708
+                      children [
+                        DEF rf_foot_s Shape {
+                          appearance DEF foot PBRAppearance {
+                            baseColor 0 0 1
+                            baseColorMap ImageTexture {
+                              url [
+                                "textures/plastic.jpg"
+                              ]
+                            }
+                            metalness 0
+                          }
+                          geometry DEF foot Capsule {
+                            height 0.002
+                            radius 0.03
+                            subdivision 30
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  name "rf_touch"
+                  boundingObject USE rf_foot_ts
+                  physics Physics {
+                    mass 0.01
+                  }
+                  type "force-3d"
+                }
+              ]
+              name "rf_h_3_solid"
+              boundingObject USE rf_h_3_s
+              physics Physics {
+                mass 0.1
+              }
+            }
+          }
+        ]
+        name "rf_h_12_solid"
+        boundingObject USE rf_h_12_s
+        physics Physics {
+          mass 1
+        }
+      }
+    }
+    DEF lf_h_12 Hinge2Joint {
+      jointParameters HingeJointParameters {
+        anchor 0.26 0 -0.13
+      }
+      jointParameters2 JointParameters {
+      }
+      device [
+        DEF lf_h_1_m RotationalMotor {
+          name "lf_h_1_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF lf_h_1_ps PositionSensor {
+          name "lf_h_1_ps"
+        }
+      ]
+      device2 [
+        DEF lf_h_2_m RotationalMotor {
+          name "lf_h_2_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF lf_h_2_ps PositionSensor {
+          name "lf_h_2_ps"
+        }
+      ]
+      endPoint Solid {
+        translation 0.26 0 -0.13
+        rotation 0 0 -0.9999999999999999 1.5705170763316034
+        children [
+          DEF lf_h_12_s Shape {
+            appearance PBRAppearance {
+              baseColor 0.333333 0 1
+              baseColorMap ImageTexture {
+                url [
+                  "textures/plastic.jpg"
+                ]
+              }
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.06
+            }
+          }
+          DEF lf_h_12_leg_solid Solid {
+            translation 0.16 0 0
+            children [
+              DEF lf_h_12_leg_s Shape {
+                appearance PBRAppearance {
+                  baseColor 0.333333 0.333333 1
+                  baseColorMap ImageTexture {
+                    url [
+                      "textures/plastic.jpg"
+                    ]
+                  }
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.32 0.07 0.048
+                }
+              }
+            ]
+            boundingObject USE lf_h_12_leg_s
+            physics Physics {
+              mass 0.5
+            }
+          }
+          DEF lf_h_3 HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.32 0 0
+            }
+            device [
+              DEF lf_h_3_m RotationalMotor {
+                name "lf_h_3_m"
+                acceleration 20
+                controlPID 20 0 2
+                maxVelocity 20
+                maxTorque 50
+              }
+              DEF lf_h_3_ps PositionSensor {
+                name "lf_h_3_ps"
+              }
+            ]
+            endPoint DEF lf_h_3_leg_solid Solid {
+              translation 0.4799999999999999 -1.3877787807814457e-17 0
+              rotation 0 0 1 0
+              children [
+                DEF lf_h_3_s Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.333333 0.666667 1
+                    baseColorMap ImageTexture {
+                      url [
+                        "textures/plastic.jpg"
+                      ]
+                    }
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.32 0.032 0.034
+                  }
+                }
+                DEF lf_touch TouchSensor {
+                  translation 0.145 0 0
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF lf_foot_ts Transform {
+                      rotation 1 0 0 1.5707963
+                      children [
+                        DEF lf_foot_s Shape {
+                          appearance PBRAppearance {
+                            baseColor 0 0 1
+                            baseColorMap ImageTexture {
+                              url [
+                                "textures/plastic.jpg"
+                              ]
+                            }
+                            metalness 0
+                          }
+                          geometry Capsule {
+                            height 0.002
+                            radius 0.03
+                            subdivision 30
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  name "lf_touch"
+                  boundingObject USE lf_foot_ts
+                  physics Physics {
+                    mass 0.01
+                  }
+                  type "force-3d"
+                }
+              ]
+              name "lf_h_3_solid"
+              boundingObject USE lf_h_3_s
+              physics Physics {
+                mass 0.1
+              }
+            }
+          }
+        ]
+        name "lf_h_12_solid"
+        boundingObject USE lf_h_12_s
+        physics Physics {
+          mass 1
+        }
+      }
+    }
+    DEF rb_h_12 Hinge2Joint {
+      jointParameters HingeJointParameters {
+        anchor -0.26 0 0.13
+      }
+      jointParameters2 JointParameters {
+      }
+      device [
+        DEF rb_h_1_m RotationalMotor {
+          name "rb_h_1_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF rb_h_1_ps PositionSensor {
+          name "rb_h_1_ps"
+        }
+      ]
+      device2 [
+        DEF rb_h_2_m RotationalMotor {
+          name "rb_h_2_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF rb_h_2_ps PositionSensor {
+          name "rb_h_2_ps"
+        }
+      ]
+      endPoint Solid {
+        translation -0.26 0 0.13
+        rotation 1.9652772591217735e-22 -1.160449429195714e-21 -1 1.5708000000000004
+        children [
+          DEF rb_h_12_s Shape {
+            appearance PBRAppearance {
+              baseColor 0.333333 0 1
+              baseColorMap ImageTexture {
+                url [
+                  "textures/plastic.jpg"
+                ]
+              }
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.06
+            }
+          }
+          DEF rb_h_12_leg_solid Solid {
+            translation 0.16 0 0
+            children [
+              DEF rb_h_12_leg_s Shape {
+                appearance PBRAppearance {
+                  baseColor 0.333333 0.333333 1
+                  baseColorMap ImageTexture {
+                    url [
+                      "textures/plastic.jpg"
+                    ]
+                  }
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.32 0.07 0.048
+                }
+              }
+            ]
+            boundingObject USE rb_h_12_leg_s
+            physics Physics {
+              mass 0.5
+            }
+          }
+          DEF rb_h_3 HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.32 0 0
+            }
+            device [
+              DEF rb_h_3_m RotationalMotor {
+                name "rb_h_3_m"
+                acceleration 20
+                controlPID 20 0 2
+                maxVelocity 20
+                maxTorque 50
+              }
+              DEF rb_h_3_ps PositionSensor {
+                name "rb_h_3_ps"
+              }
+            ]
+            endPoint DEF rb_h_3_leg_solid Solid {
+              translation 0.4799999999999999 -2.7755575615628914e-17 0
+              rotation 0 0 1 0
+              children [
+                DEF rb_h_3_s Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.333333 0.666667 1
+                    baseColorMap ImageTexture {
+                      url [
+                        "textures/plastic.jpg"
+                      ]
+                    }
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.32 0.032 0.034
+                  }
+                }
+                DEF rb_touch TouchSensor {
+                  translation 0.145 0 0
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF rb_foot_ts Transform {
+                      rotation 1 0 0 1.5708
+                      children [
+                        DEF rb_foot_s Shape {
+                          appearance PBRAppearance {
+                            baseColor 0 0 1
+                            baseColorMap ImageTexture {
+                              url [
+                                "textures/plastic.jpg"
+                              ]
+                            }
+                            metalness 0
+                          }
+                          geometry Capsule {
+                            height 0.002
+                            radius 0.03
+                            subdivision 30
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  name "rb_touch"
+                  boundingObject USE rb_foot_ts
+                  physics Physics {
+                    mass 0.01
+                  }
+                  type "force-3d"
+                }
+              ]
+              name "rb_h_3_solid"
+              boundingObject USE rb_h_3_s
+              physics Physics {
+                mass 0.1
+              }
+            }
+          }
+        ]
+        name "rb_h_12_solid"
+        boundingObject USE rb_h_12_s
+        physics Physics {
+          mass 1
+        }
+      }
+    }
+    DEF lb_h_12 Hinge2Joint {
+      jointParameters HingeJointParameters {
+        anchor -0.26 0 -0.13
+      }
+      jointParameters2 JointParameters {
+      }
+      device [
+        DEF lb_h_1_m RotationalMotor {
+          name "lb_h_1_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF lb_h_1_ps PositionSensor {
+          name "lb_h_1_ps"
+        }
+      ]
+      device2 [
+        DEF lb_h_2_m RotationalMotor {
+          name "lb_h_2_m"
+          acceleration 20
+          controlPID 20 0 2
+          maxVelocity 20
+          maxTorque 50
+        }
+        DEF lb_h_2_ps PositionSensor {
+          name "lb_h_2_ps"
+        }
+      ]
+      endPoint Solid {
+        translation -0.26 0 -0.13
+        rotation 0 0 -1 1.5707999999983902
+        children [
+          DEF lb_h_12_s Shape {
+            appearance PBRAppearance {
+              baseColor 0.333333 0 1
+              baseColorMap ImageTexture {
+                url [
+                  "textures/plastic.jpg"
+                ]
+              }
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.06
+            }
+          }
+          DEF lb_h_12_leg_solid Solid {
+            translation 0.16 0 0
+            children [
+              DEF lb_h_12_leg_s Shape {
+                appearance PBRAppearance {
+                  baseColor 0.333333 0.333333 1
+                  baseColorMap ImageTexture {
+                    url [
+                      "textures/plastic.jpg"
+                    ]
+                  }
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.32 0.07 0.048
+                }
+              }
+            ]
+            boundingObject USE lb_h_12_leg_s
+            physics Physics {
+              mass 0.5
+            }
+          }
+          DEF lb_h_3 HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.32 0 0
+            }
+            device [
+              DEF lb_h_3_m RotationalMotor {
+                name "lb_h_3_m"
+                acceleration 20
+                controlPID 20 0 2
+                maxVelocity 20
+                maxTorque 50
+              }
+              DEF lb_h_3_ps PositionSensor {
+                name "lb_h_3_ps"
+              }
+            ]
+            endPoint DEF lb_h_3_leg_solid Solid {
+              translation 0.4800000000000001 0 0
+              rotation 0 0 1 0
+              children [
+                DEF lb_h_3_s Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.333333 0.666667 1
+                    baseColorMap ImageTexture {
+                      url [
+                        "textures/plastic.jpg"
+                      ]
+                    }
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.32 0.032 0.034
+                  }
+                }
+                DEF lb_touch TouchSensor {
+                  translation 0.145 0 0
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF lb_foot_ts Transform {
+                      rotation 1 0 0 1.5708
+                      children [
+                        DEF lb_foot_s Shape {
+                          appearance PBRAppearance {
+                            baseColor 0 0 1
+                            baseColorMap ImageTexture {
+                              url [
+                                "textures/plastic.jpg"
+                              ]
+                            }
+                            metalness 0
+                          }
+                          geometry Capsule {
+                            height 0.002
+                            radius 0.03
+                            subdivision 30
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  name "lb_touch"
+                  boundingObject USE lb_foot_ts
+                  physics Physics {
+                    mass 0.01
+                  }
+                  type "force-3d"
+                }
+              ]
+              name "lb_h_3_solid"
+              boundingObject USE lb_h_3_s
+              physics Physics {
+                mass 0.1
+              }
+            }
+          }
+        ]
+        name "lb_h_12_solid"
+        boundingObject USE lb_h_12_s
+        physics Physics {
+          mass 1
+        }
+      }
+    }
+  ]
+  name "dog_c"
+  boundingObject USE body_trs
+  physics Physics {
+    mass 10
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  controller "dog_c"
+  supervisor TRUE
+}
+Background {
+  skyColor [
+    1 1 1
+  ]
+}
+DEF PLANE Solid {
+  translation 0 0.001 0
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "textures/grid.png"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 100 100
+        }
+      }
+      geometry Plane {
+        size 10 10
+      }
+    }
+  ]
+}
+Solid {
+  translation 0.67 0.14 -0.8
+  children [
+    DEF OBJ Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.937255 0.160784 0.160784
+        }
+      }
+      geometry Box {
+        size 2.1 0.14 1
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE OBJ
+  physics Physics {
+  }
+}
+Solid {
+  translation 0.67 0.36 -1.82
+  children [
+    DEF OBJ Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.937255 0.160784 0.160784
+        }
+      }
+      geometry Box {
+        size 0.9 0.12 1
+      }
+    }
+  ]
+  name "solid(2)"
+  boundingObject USE OBJ
+  physics Physics {
+  }
+}
