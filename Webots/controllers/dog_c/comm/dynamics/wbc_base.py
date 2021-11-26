@@ -84,7 +84,7 @@ def force_constrint(touchstate):
     '''
     u = .4 #摩擦系数倒数
     f_z_max = 500 #z轴所能贡献的最大力
-    f_z_min = 20   #z轴所能贡献的最小力
+    f_z_min = 2   #z轴所能贡献的最小力
     f_min = -50 # x,y 轴最小力 （其实已经被u给约束）
     f_max = 50
     
@@ -101,7 +101,7 @@ def force_constrint(touchstate):
 
     z_limit = np.array([[0,0,1], [0,0,-1]],dtype=np.float64)
 
-    h = np.mat( [0.,0.,0.,0., f_z_max, f_z_min], dtype=np.float64).T
+    h = np.mat( [0.,0.,0.,0., f_z_max, -f_z_min], dtype=np.float64).T
 
     G = np.vstack( (fric_lim_x, fric_lim_y, z_limit) )
     
